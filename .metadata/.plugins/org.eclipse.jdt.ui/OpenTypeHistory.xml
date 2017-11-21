@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=MedioxyPharmBackend/C:\/Program Files\/Java\/jdk1.8.0_144\/jre\/lib\/rt.jar&lt;javax.xml.soap(Detail.class[Detail" modifiers="1537" timestamp="1506200794991"/>
+<typeInfo handle="=MedioxyPharmBackend/src\/main\/java&lt;com.dao{Checkout1Dao.java[Checkout1Dao" modifiers="513" timestamp="1509758352109"/>
+<typeInfo handle="=MedioxyPharmBackend/C:\/Program Files\/Java\/jdk1.8.0_144\/jre\/lib\/rt.jar&lt;com.sun.xml.internal.ws.api.model(CheckedException.class[CheckedException" modifiers="1537" timestamp="1506200794991"/>
+<typeInfo handle="=MedioxyPharmBackend/src\/main\/java&lt;com.dao{Checkout2Dao.java[Checkout2Dao" modifiers="513" timestamp="1510084059325"/>
+<typeInfo handle="=MedioxyPharmBackend/src\/main\/java&lt;com.dao{Checkout3Dao.java[Checkout3Dao" modifiers="513" timestamp="1510084423185"/>
+<typeInfo handle="=MedioxyPharmBackend/src\/main\/java&lt;com.dao{OrderSummaryDao.java[OrderSummaryDao" modifiers="513" timestamp="1510686453688"/>
+<typeInfo handle="=MedioxyPharmBackend/C:\/Users\/Sagnik\/.m2\/repository\/org\/springframework\/spring-core\/4.3.9.RELEASE\/spring-core-4.3.9.RELEASE.jar&lt;org.springframework.core(Ordered.class[Ordered" modifiers="1537" timestamp="1506894688421"/>
+</typeInfoHistroy>

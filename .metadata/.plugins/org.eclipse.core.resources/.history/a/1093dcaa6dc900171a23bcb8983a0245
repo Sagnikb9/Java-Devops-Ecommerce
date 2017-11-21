@@ -1,0 +1,31 @@
+package com.dao;
+
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.model.OrderSummary;
+@Repository("orderSummaryDao")
+public class OrderSummaryDaoImpl implements OrderSummaryDao {
+
+	@Autowired
+	SessionFactory sessionFactory;
+	
+	@Transactional
+	@Override
+	public List<OrderSummary> retrieveOrderSummary() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Transactional
+	@Override
+	public OrderSummary getOrderSummary(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

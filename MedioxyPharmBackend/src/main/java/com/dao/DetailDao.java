@@ -1,0 +1,18 @@
+package com.dao;
+
+import java.util.List;
+
+import com.model.Details;
+
+
+
+
+public interface DetailDao {
+
+	public boolean addDetail(Details detail);
+	public boolean updateDetail(Details detail);
+	public boolean deleteDetail(Details detail);
+	public List<Details>retrieveDetail();
+	public Details getDetail(int id);
+
+}

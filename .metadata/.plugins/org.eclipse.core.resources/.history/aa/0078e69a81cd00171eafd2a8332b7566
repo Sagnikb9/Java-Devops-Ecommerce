@@ -1,0 +1,502 @@
+
+<%@page import="com.*" %>
+<%@page import="java.sql.*" %>
+<%@page import="java.util.*" %>
+<%@page import="javax.mail.*" %>
+<%@page import="javax.mail.internet.*" %>
+<%@page import="javax.mail.Authenticator" %>
+<%@page import="javax.mail.Session" %>
+<%@page import="javax.mail.PasswordAuthentication" %>
+<%@page import="javax.activation.*" %>
+
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Obaju e-commerce template">
+    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
+    <meta name="keywords" content="">
+
+    <title>
+        MedioxyPharm
+    </title>
+
+    <meta name="keywords" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+
+    <!-- styles -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <link href="css/owl.theme.css" rel="stylesheet">
+
+    <!-- theme stylesheet -->
+    <link href="css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+
+    <!-- your stylesheet with modifications -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <script src="js/respond.min.js"></script>
+
+    <link rel="shortcut icon" href="favicon.png">
+
+
+
+</head>
+
+<body>
+
+    <!-- *** TOPBAR ***
+ _________________________________________________________ -->
+    <div id="top">
+        <div class="container">
+            <div class="col-md-6 offer" data-animate="fadeInDown">
+                <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a>  <a href="#">Get flat 35% off on orders over $50!</a>
+            </div>
+            <div class="col-md-6" data-animate="fadeInDown">
+                <ul class="menu">
+                    
+                  
+                           <li><a href="login" data-toggle="modal" data-target="#login-modal">Login</a>
+                           </li>
+                           <li><a href="register" data-toggle="modal" data-target="#login-modal1">Register</a>
+                           </li>  
+                           <li><a href="contact">Contact</a></li> 
+                           <li><a href="account">${sessionScope.username}</a></li>
+                                                                                
+                          
+             
+                   
+                </ul>
+            </div>
+        </div>
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="Login">Customer login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="perform_login" method="POST">
+                        
+                        
+                    
+                
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email-modal" placeholder="Email" name="username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password-modal" placeholder="Password" name="password">
+                            </div>
+
+                            <p class="text-center">
+                                <input type="submit" class="btn btn-primary" class="fa fa-sign-in" value="Login"/>
+                            </p>
+
+                        </form>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+<%
+Session session2; 
+String toEmail; 
+String subject; 
+String body;
+MimeMessage msg = new MimeMessage(session2);
+//set message headers
+msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+msg.addHeader("format", "flowed");
+msg.addHeader("Content-Transfer-Encoding", "8bit");
+
+msg.setFrom(new InternetAddress("no_reply@journaldev.com", "NoReply-JD"));
+
+msg.setReplyTo(InternetAddress.parse("no_reply@journaldev.com", false));
+
+msg.setSubject(subject, "UTF-8");
+
+msg.setText(body, "UTF-8");
+
+msg.setSentDate(new Date());
+
+msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+System.out.println("Message is ready");
+Transport.send(msg);  
+
+System.out.println("EMail Sent Successfully!!");
+String fromEmail = "myemailid@gmail.com"; //requires valid gmail id
+String password = "mypassword"; // correct password for gmail id
+String toEmail = "myemail@yahoo.com"; // can be any email id 
+
+System.out.println("TLSEmail Start");
+Properties props = new Properties();
+props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+props.put("mail.smtp.port", "587"); //TLS Port
+props.put("mail.smtp.auth", "true"); //enable authentication
+props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+        //create Authenticator object to pass in Session.getInstance argument
+Authenticator auth = new Authenticator() {
+	//override the getPasswordAuthentication method
+	protected PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(fromEmail, password);
+	}
+};
+Session session2 = Session.getInstance(props, auth);
+
+EmailUtil.sendEmail(session2, toEmail,"TLSEmail Testing Subject", "TLSEmail Testing Body");
+
+
+
+
+
+%>       
+        <div class="modal fade" id="login-modal1" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="Login">Register Now</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email-modal" placeholder="Username" name="username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password-modal" placeholder="Password" name="password">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="password-modal" placeholder="Password" name="enabled" value="TRUE">
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="password-modal" placeholder="Password" name="role" value="ROLE_USER">
+                            </div>
+                            <p class="text-center">
+                                <input type="submit" class="btn btn-primary" class="fa fa-sign-in" value="Register">
+                            </p>
+
+                        </form>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    
+    
+    
+
+    <!-- *** TOP BAR END *** -->
+    
+        <!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+<style>
+
+.product-count {
+    background: none repeat scroll 0 0 #1abc9c;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 10px;
+    height: 20px;
+    padding-top: 2px;
+    position: absolute;
+    right: -10px;
+    text-align: center;
+    top: -10px;
+    width: 20px;
+}
+
+</style>            
+<% 
+            String username=(String)session.getAttribute("username");
+            Class.forName("org.h2.Driver");
+            Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/medioxy1","sa","");       
+
+            String sql="select count(*) from Details where username=?";
+            PreparedStatement ps=con.prepareStatement(sql);
+           	ps.setString(1, username);
+            ResultSet rs=ps.executeQuery();	
+            
+            
+         
+%>
+    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+
+                <a class="navbar-brand home" href="#" data-animate-hover="bounce">
+                    <img src="img/logo.jpg" alt="logo" class="hidden-xs">
+                    <img src="img/logo-small.jpg" alt="logo" class="visible-xs"><span class="sr-only"></span>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+                     <% while(rs.next())
+                                                
+                        {%>
+                    <a class="btn btn-default navbar-toggle" href="basket">
+                        <i class="fa fa-shopping-cart"></i>  <span class="product-count">
+                            
+                       
+                        
+                        <%=rs.getInt("count(*)") %>
+                       
+                                               
+                                                    
+                                 
+                    </span>
+                    </a>
+                    
+                </div>
+            </div>
+            <!--/.navbar-header -->
+<%-- <%
+
+String catgName=request.getParameter("catgName");
+
+	Connection conn;
+    conn=ConnectionDB.getConnection();
+    String sql="select catgName from Category where catgId=12 ";
+    PreparedStatement ps=conn.prepareStatement(sql);
+    
+   
+    ResultSet rs=ps.executeQuery();
+
+%> --%>
+
+            <div class="navbar-collapse collapse" id="navigation">
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active"><a href="index">Home</a>
+                    </li>
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">OTC<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            <!-- <h5>Clothing</h5> -->
+                                            <ul>
+                                            <c:forEach items="${categoryList}" var="category">
+                                            
+                                                <li><a href="product">${category.catgName}</a>
+                                                
+                                                </li>
+                                               
+                                             </c:forEach>   
+                                            </ul>
+                                        </div>
+                                        <!--  -->
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">BABY & MOTHER <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            
+                                            <ul>
+                                                <li><a href="category.html">Baby & Infant</a>
+                                                </li>
+                                                <li><a href="category.html">Maternity & Mother Care</a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">PERSONAL CARE <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            
+                                            <ul>
+                                                <li><a href="category.html">Body Care</a>
+                                                </li>
+                                                <li><a href="category.html">Eye Care</a>
+                                                </li>
+                                                <li><a href="category.html">Hair Care</a>
+                                                </li>
+                                                <li><a href="category.html">Facial Kit</a>
+                                                </li>
+                                                <li><a href="category.html">Mens Essentials</a>
+                                                </li>
+                                                <li><a href="category.html">Womens Essentials</a>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">WELLNESS <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            
+                                            <ul>
+                                                <li><a href="category.html">Fitness</a>
+                                                </li>
+                                                <li><a href="category.html">Health Drinks</a>
+                                                </li>
+                                                <li><a href="category.html">Supplements</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">MEDICAL EQUIPMENTS & SUPPORT  <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            
+                                            <ul>
+                                                <li><a href="category.html">Medical Instruments</a>
+                                                </li>
+                                                <li><a href="category.html">Ortho Support</a>
+                                                </li>
+                                                <li><a href="category.html">Senior Care</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown yamm-fw">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">EXPERT ADVICE  <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="">
+                                            
+                                            <ul>
+                                                <li><a href="category.html">Advice For Seniors</a>
+                                                </li>
+                                                <li><a href="category.html">Advice For Juniors</a>
+                                                </li>
+                                                <li><a href="category.html">Child Therapy</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+                                        
+                </ul>
+
+            </div>
+            <!--/.nav-collapse -->
+
+            <div class="navbar-buttons">
+ 
+                <div class="navbar-collapse collapse right" id="basket-overview">
+                    <a href="<%=request.getContextPath()%>/basket/${username}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i>
+                    <span class="product-count">
+                            
+                       
+                        
+                        <%=rs.getInt("count(*)") %>
+                       
+                                               
+                                                    
+                                 
+                    </span></a>
+                </div>
+                 <%}%>
+                <!--/.nav-collapse -->
+
+                <div class="navbar-collapse collapse right" id="search-not-mobile">
+                    <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="collapse clearfix" id="search">
+
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+
+			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+		    </span>
+                    </div>
+                </form>
+
+            </div>
+            <!--/.nav-collapse -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#navbar -->
+
+    <!-- *** NAVBAR END *** -->
+    

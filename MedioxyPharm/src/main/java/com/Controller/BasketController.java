@@ -1,0 +1,138 @@
+package com.Controller;
+
+
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.dao.BasketDao;
+import com.dao.DetailDao;
+import com.dao.UserDao;
+import com.model.Basket;
+import com.model.Details;
+
+
+
+
+
+
+@Controller
+public class BasketController {
+	
+	@Autowired
+	BasketDao basketDao;
+	
+	@Autowired
+    DetailDao detailDao;
+	
+	@RequestMapping(value="/basket/{username}",method= RequestMethod.POST)
+	public String addBasket(@PathVariable("username")String username,
+			                @RequestParam("proId")String proId,
+			                @RequestParam("proName")String proName,
+			                @RequestParam("quantity")String quantity,
+			                @RequestParam("proPrice")String proPrice,
+			                Model m,HttpSession session)
+	{
+		
+	    		
+	    	
+	    		Details detail=new Details();
+	    		Basket basket=new Basket();
+	    		basket.setProId(proId);
+	    		basket.setProName(proName);
+	    		basket.setQuantity(quantity);
+	    		basket.setProPrice(proPrice);
+	    		
+	    		
+	    		/*int total = 0;
+	    				for x in quantity:
+	    				    total = total + proPrice[x] * quantity[x]
+	    		*/
+	    		/*for(int i=0;i<=limit;i++)
+	    		{
+	    			
+	    			String multi = String.valueOf(Float.valueOf(quantity.charAt(0)) * Float.valueOf(proPrice.charAt(0)));	
+	    			
+	    			
+	    				
+	    				
+	    			   
+                            int sum=0;
+	    			        sum+=multi.charAt(0)+multi.charAt(1)+multi.charAt(2);
+	    			        
+	    			        
+	    			        total=String.valueOf(sum);
+	    			    
+		    				
+	    				
+	    			
+	    			
+	    			
+	    		}
+	    		
+	    		basket.setTotal(total);
+	    	    */
+
+	    	    
+	    	
+	    		basket.setUsername((String) session.getAttribute("username"));
+	    		username=(String) session.getAttribute("username");
+	    		
+	    		basketDao.addBasket(basket);
+	    		
+	    		return "checkout1";
+	}
+	@RequestMapping(value="/basket/{username}",method=RequestMethod.GET)
+	public String displayBasket(@PathVariable("username")String username,Model m,HttpSession session)
+	{
+	
+		        
+		        Details details=new Details();
+		        username=(String) session.getAttribute("username");
+		        details.getUsername();
+		        m.addAttribute(details);
+		
+		        List<Details>listDetail=detailDao.retrieveDetail();
+		        m.addAttribute("detailList",listDetail);
+		
+		        
+        
+	      
+		        return "basket";
+	}
+	
+	@RequestMapping(value="{username}/deleteDetails/{id}",method=RequestMethod.GET)
+    public String deleteDetails(@PathVariable("id")int id,Model m)
+    {
+        Details detail=detailDao.getDetail(id);
+        detailDao.deleteDetail(detail);
+        
+        List<Details> listDetail=detailDao.retrieveDetail();
+        m.addAttribute("detailList",listDetail);
+        
+        return "redirect:/basket/{username}";
+    }
+	
+	
+	
+
+}

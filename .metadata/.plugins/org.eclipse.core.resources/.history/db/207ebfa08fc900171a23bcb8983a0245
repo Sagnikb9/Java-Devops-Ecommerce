@@ -1,0 +1,221 @@
+<jsp:include page="headerContext.jsp"></jsp:include>
+<%@ page import="com.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="javax.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="javax.servlet.*" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ <style>
+.hidden {
+    display: none;
+}
+</style> 
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li>Checkout - Order review</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-9" id="checkout">
+
+                    <div class="box" id="doc">
+                      
+                            <h1>Order Summary</h1>
+                            
+
+                            <div class="content">
+                                <div class="table-responsive">
+                                    <table class="table">
+        <% 
+            String username=(String)session.getAttribute("username");
+            Class.forName("org.h2.Driver");
+            Connection con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/medioxy1","sa","");       
+            Statement statement = con.createStatement();
+            ResultSet resultset = statement.executeQuery("select * from Basket order by id desc limit 1 ");
+           		
+            
+            
+         
+        %>
+                                        <thead>
+                                            <tr>
+                                                <th>Customer Name</th>
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Quantity</th>
+                                                <th>Product price</th>
+                                                
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                 
+                                      <tbody>
+                                            <tr>
+                                                <!-- <td>
+                                                    <a href="#">
+                                                        <img src="img/detailsquare.jpg" alt="White Blouse Armani">
+                                                    </a>
+                                                </td> -->
+                                                <% while(resultset.next())
+                                                
+                                                
+                                                { 
+                                               
+                                                %>
+                                                
+                                                
+                                                <td><input type="hidden" class="form-control" name="proId" id="quantity"><%=resultset.getString("username") %>
+                                                </td>
+                                                <td><input type="hidden" class="form-control" name="proId" id="quantity"><%=resultset.getString("proId") %>
+                                                </td>
+                                                <td><input type="hidden" class="form-control" name="proName" id=""><%=resultset.getString("proName") %>
+                                                </td>
+                                                <td><input type="hidden" class="form-control" name="quantity" id="quantity"><%=resultset.getString("quantity") %></td>
+                                                <td><input type="hidden" class="form-control" name="proPrice" id="">Rs: <%=resultset.getString("proPrice") %></td>
+                                                
+                                              
+          <%
+                   
+                   String qtyStr = resultset.getString("quantity");
+                   String priceStr = resultset.getString("proPrice");
+
+                   String[] qtyArr = qtyStr.split(",");
+                   String[] priceArr = priceStr.split(",");
+
+                   String[] tempArr = new String[qtyArr.length];
+
+                   String total=null;
+                   int sum=0;
+                   for(int i = 0; i < qtyArr.length; i++){
+                   	tempArr[i] = String.valueOf(Integer.parseInt(qtyArr[i]) * Integer.parseInt(priceArr[i]));
+                   	sum+=Integer.parseInt(tempArr[i]);
+                   	total=String.valueOf(sum);
+                   }
+                   
+                   
+                   
+                   
+                   
+                   %>  
+                   
+  <td><input type="hidden" class="form-control" name="total" id="" value="">Rs:<%=total%></td>
+  
+
+    
+
+                      
+                                            
+   
+                                               
+                                          
+                                            </tr>
+           
+                                        </tbody>
+                                        
+                                        <tfoot>
+                                            <!-- <tr>
+                                                <th colspan="5">Total</th>
+                                                <th>$446.00</th>
+                                            </tr> -->
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.content -->
+
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <a href="<c:url value="/basket/${username}"/>" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Basket</a>
+                                </div>
+                                <!-- <div class="pull-right">
+                                    <input type="submit" class="btn btn-primary" value="Place an order"><i class="fa fa-chevron-right"></i>
+                                    
+                                </div> -->
+                            </div>
+                        <h3>Thank you for shopping with us.</h3>
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+                
+                
+                <!-- /.col-md-9 -->
+
+                <div class="col-md-3">
+
+                    <div class="box" id="order-summary">
+                        <div class="box-header">
+                            <h3>Invoice</h3>
+                        </div>
+                        <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Order subtotal</td>
+                                        <th>Rs: <%=resultset.getString("proPrice") %></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping and handling</td>
+                                        <th>Rs 0.00</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax</td>
+                                        <th>Rs 0.00</th>
+                                    </tr>
+                                    <tr class="total">
+                                        <td>Total</td>
+                                        <th>Rs: <%=total%></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                          <div class="box-footer">
+                                <%-- <div class="pull-left">
+                                    <a href="<c:url value="/basket/${username}"/>" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Basket</a>
+                                </div> --%>
+                                 <div class="pull-right">
+                                    <input type="submit" class="btn btn-primary" value="Download" onClick="window.print()" ><i class="fa fa-chevron-right"></i>
+                                    
+                                </div> 
+                            </div>
+                    </div>
+
+                </div>
+                <!-- /.col-md-3 -->
+
+            </div>
+            <!-- /.container -->
+            <% } %> 
+        </div>
+        <!-- /#content -->
+        
+<script>
+function print_specific_div_content(){
+    var win = window.open('','','left=0,top=0,width=552,height=477,toolbar=0,scrollbars=0,status =0');
+
+    var content = "<html>";
+    content += "<body onload=\"window.print(); window.close();\">";
+    content += document.getElementById("doc").innerHTML ;
+    content += document.getElementById("order-summary").innerHTML ;
+    content += "</body>";
+    content += "</html>";
+    win.document.write(content);
+    win.document.close();
+}
+</script>
+
+<jsp:include page="footerContext.jsp"></jsp:include>
