@@ -16,7 +16,7 @@
                 <div class="col-md-9" id="checkout">
 
                     <div class="box">
-                        <form method="post" action="<%=request.getContextPath() %>/checkout3/${username}">
+                        <form method="post" action="<%=request.getContextPath() %>/checkout3/${username}" onsubmit="return validate()">
                             <h1>Checkout - Payment method</h1>
                             <ul class="nav nav-pills nav-justified">
                                 <li><a href="#"><i class="fa fa-map-marker"></i><br>Address</a>
@@ -41,7 +41,7 @@
 
                                             <div class="box-footer text-center">
 
-                                                <input type="radio" name="payment" value="Online Banking">
+                                                <input id="one" type="radio" name="payment" value="Online Banking">
                                             </div>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
 
                                             <div class="box-footer text-center">
 
-                                                <input type="radio" name="payment" value="Cash On Delivery">
+                                                <input id="two" type="radio" name="payment" value="Cash On Delivery">
                                             </div>
                                         </div>
                                     </div>
@@ -91,5 +91,21 @@
         <!-- /#content -->
 
 
-        
+ <br>       
 <jsp:include page="footerContext.jsp"></jsp:include>
+
+<script>
+        function validate()
+        {
+        var o = document.getElementById('one');
+        var t = document.getElementById('two');
+
+        if ( (o.checked == false ) && (t.checked == false ) )
+        {
+        alert ( "please check radio button" );
+        
+        return false;
+        }
+        } 
+        
+        </script>

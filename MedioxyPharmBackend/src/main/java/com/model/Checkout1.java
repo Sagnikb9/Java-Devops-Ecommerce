@@ -27,10 +27,10 @@ public class Checkout1 implements Serializable {
 	private String company;
 	private String address;
 	private String street;
-	private int zip;
+	private String zip;
 	private String State;
 	private String Country;
-	private int phone;
+	private String phone;
 	private String email;
 	private String username;
 	public int getId() {
@@ -69,10 +69,10 @@ public class Checkout1 implements Serializable {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public int getZip() {
+	public String getZip() {
 		return zip;
 	}
-	public void setZip(int zip) {
+	public void setZip(String zip) {
 		this.zip = zip;
 	}
 	public String getState() {
@@ -87,10 +87,10 @@ public class Checkout1 implements Serializable {
 	public void setCountry(String country) {
 		Country = country;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getEmail() {

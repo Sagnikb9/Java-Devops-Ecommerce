@@ -35,7 +35,7 @@
 %>                    
                       
                        
-<form action="<%=request.getContextPath()%>/basket/${username}" method="post" onsubmit=" return validation()">
+<form name="myForm" action="<%=request.getContextPath()%>/basket/${username}" method="post">
                             <h1>Shopping cart</h1>
                             <p class="text-muted">You currently have 3 item(s) in your cart.</p>
                             <div class="table-responsive">
@@ -63,17 +63,18 @@
                                         
                                         <tr>
                                         
-                                            <td><input type="hidden" class="form-control" name="proId" value="${detail.proId}"><%=rs.getInt("proId") %></td>
-                                            <td><input type="hidden" class="form-control" name="proName" value="${detail.proName}"><%=rs.getString("proName") %></td>
+                                            <td><input type="hidden" class="form-control" name="proId" value="<%=rs.getInt("proId") %>"><%=rs.getInt("proId") %></td>
+                                            <td><input type="hidden" class="form-control" name="proName" value="<%=rs.getString("proName") %>"><%=rs.getString("proName") %></td>
                                                 
                                             
                                             <td><img src="<%=request.getContextPath()%>/assets/img/<%=rs.getString("proId") %>.jpg" width="80px" height="80px"/></td>                              
                                             
+ 
+                                          
+                                            <td><input type="number" class="form-control" name="quantity" id="quantity" min="1"></td>
+                                              
                                             
-                                            <td><input type="number" class="form-control" name="quantity" id="qty" min="1"></td>
-                                                
-                                            
-                                            <td><input type="hidden" class="form-control" name="proPrice" value="${detail.proPrice}">Rs <%=rs.getInt("proPrice") %></td>
+                                            <td><input type="hidden" class="form-control" name="proPrice" value="<%=rs.getInt("proPrice") %>">Rs <%=rs.getInt("proPrice") %></td>
                                             
                                             
                                                 
@@ -156,20 +157,9 @@
 
 </div>
 
-<script>
- function validation() {
-     var qty=document.getElementById('qty').value;
-     
-     if(qty < 0) {
-         alert("Please enter quantity");
-         return false;
-     }
-     else
-    	 {
-    	   return true;
-    	 }
- }
-</script>
+
 
 
 <jsp:include page="footerContext.jsp"></jsp:include>
+
+

@@ -201,7 +201,7 @@
                      <% while(rs.next())
                                                 
                         {%>
-                    <a class="btn btn-default navbar-toggle" href="basket">
+                    <a class="btn btn-default navbar-toggle" href="<%=request.getContextPath()%>/basket/${username}">
                         <i class="fa fa-shopping-cart"></i>  <span class="product-count">
                             
                        
@@ -396,7 +396,7 @@ String catgName=request.getParameter("catgName");
 <div class="navbar-buttons">
  
                 <div class="navbar-collapse collapse right" id="basket-overview">
-                    <a href="<%=request.getContextPath()%>/basket/${username}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i>
+                    <a href="<%=request.getContextPath()%>/checkout4/${username}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i>
                     <span class="product-count">
                             
                        

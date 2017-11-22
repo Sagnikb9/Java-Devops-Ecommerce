@@ -141,11 +141,13 @@
                             <!-- /.content -->
 
                             <div class="box-footer">
-                                <%-- <div class="pull-left">
-                                    <a href="<c:url value="/basket/${username}"/>" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Basket</a>
-                                </div> --%>
+                                <div class="pull-left">
+                                    <a href="<%=request.getContextPath()%>/" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                                </div>
                                 <div class="pull-right">
-                                    <input type="submit" class="btn btn-primary" value="Place an order"><i class="fa fa-chevron-right"></i>
+                                    <input type="reset" class="btn btn-default" value="Update Basket"><i class="fa fa-chevron-right"></i>
+                                    
+                                    <input type="submit" class="btn btn-primary" value="Place Order"><i class="fa fa-chevron-right"></i>
                                     
                                 </div>
                             </div>
@@ -165,5 +167,5 @@
         </div>
         <!-- /#content -->
 
-
+<br>
 <jsp:include page="footerContext.jsp"></jsp:include>

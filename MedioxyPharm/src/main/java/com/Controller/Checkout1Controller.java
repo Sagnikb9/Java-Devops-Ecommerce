@@ -35,10 +35,10 @@ public class Checkout1Controller {
 			                @RequestParam("company")String company,
 			                @RequestParam("address")String address,
 			                @RequestParam("street")String street,
-			                @RequestParam("zip")int zip,
+			                @RequestParam("zip")String zip,
 			                @RequestParam("state")String state,
 			                @RequestParam("country")String country,
-			                @RequestParam("phone")int phone,
+			                @RequestParam("phone")String phone,
 			                @RequestParam("email")String email,Model m,HttpSession session)
 	{
 		String page_url=null;

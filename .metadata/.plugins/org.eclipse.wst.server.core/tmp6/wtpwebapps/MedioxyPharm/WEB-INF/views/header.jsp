@@ -213,7 +213,7 @@
                      <% while(rs.next())
                                                 
                         {%>
-                    <a class="btn btn-default navbar-toggle" href="basket">
+                    <a class="btn btn-default navbar-toggle" href="<%=request.getContextPath()%>/basket/${username}">
                         <i class="fa fa-shopping-cart"></i>  <span class="product-count">
                             
                        
